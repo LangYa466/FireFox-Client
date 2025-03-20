@@ -70,6 +70,7 @@ public class GuiChat extends GuiScreen implements ITabCompleter
      */
     public void onGuiClosed()
     {
+        Client.getInstance().getConfigManager().saveAllConfig();
         Keyboard.enableRepeatEvents(false);
         this.mc.ingameGUI.getChatGUI().resetScroll();
     }

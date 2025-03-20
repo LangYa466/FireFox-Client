@@ -27,6 +27,8 @@ public class ConfigManager implements Wrapper {
         }
         add(new ModuleConfig());
         add(new ElementConfig());
+
+        loadAllConfig();
     }
 
     public void loadConfig(String name) {
