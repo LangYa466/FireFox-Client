@@ -43,6 +43,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
+
+import de.florianmichael.viamcp.fixes.AttackOrder;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -1642,7 +1644,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
                 switch (this.objectMouseOver.typeOfHit)
                 {
                     case ENTITY:
-                        this.playerController.attackEntity(this.player, this.objectMouseOver.entityHit);
+                        AttackOrder.sendFixedAttack(this.player, this.objectMouseOver.entityHit);
                         break;
 
                     case BLOCK:
@@ -1663,7 +1665,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
                         this.player.resetCooldown();
                 }
 
-                this.player.swingArm(EnumHand.MAIN_HAND);
+                AttackOrder.sendConditionalSwing(this.objectMouseOver, EnumHand.MAIN_HAND);
             }
         }
     }

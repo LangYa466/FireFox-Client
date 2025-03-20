@@ -4,6 +4,9 @@ import cn.firefox.manager.CommandManager;
 import cn.firefox.manager.ModuleManager;
 import cn.langya.Logger;
 import com.cubk.event.EventManager;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
 import org.lwjgl.opengl.Display;
 
@@ -40,6 +43,20 @@ public class Client {
         moduleManager.init();
         commandManager.init();
 
+        initViaMCP();
+
         initiated = true;
+    }
+
+    private void initViaMCP() {
+        try {
+            ViaMCP.create();
+
+            ViaMCP.INSTANCE.initAsyncSlider();
+            ViaMCP.INSTANCE.initAsyncSlider(5, 5, 110,20);
+            ViaLoadingBase.getInstance().reload(ProtocolVersion.v1_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

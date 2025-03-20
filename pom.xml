@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.ichinomiya</groupId>
-    <artifactId>MCP</artifactId>
+    <groupId>cn.firefox</groupId>
+    <artifactId>FireFox</artifactId>
     <version>1.12.2</version>
-    <description>MCP for 1.12.2</description>
+    <description>FireFox for 1.12.2</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -281,6 +281,30 @@
             <groupId>com.github.LangYa466</groupId>
             <artifactId>ELogger</artifactId>
             <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viaversion</artifactId>
+            <version>5.2.0-downgraded</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libraries/ViaVersion-5.2.0-downgraded.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viarewind</artifactId>
+            <version>4.0.4-downgraded</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libraries/ViaRewind-4.0.4-downgraded.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viabackwards</artifactId>
+            <version>5.2.0-downgraded</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libraries/ViaBackwards-5.2.0-downgraded.jar</systemPath>
         </dependency>
     </dependencies>
 

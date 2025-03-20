@@ -6,6 +6,7 @@ import cn.firefox.module.Category;
 import cn.firefox.module.Module;
 import cn.firefox.module.value.impl.NumberValue;
 import com.cubk.event.annotations.EventTarget;
+import de.florianmichael.viamcp.fixes.AttackOrder;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 
@@ -73,7 +74,7 @@ public class KillAura extends Module {
 
         long attackCooldown = (long) (1000 / cps.getValue());
         if (target != null && System.currentTimeMillis() - lastAttackTime > attackCooldown) {
-            mc.playerController.attackEntity(mc.player, target);
+            AttackOrder.sendFixedAttack(mc.player, target);
             lastAttackTime = System.currentTimeMillis();
         }
     }
