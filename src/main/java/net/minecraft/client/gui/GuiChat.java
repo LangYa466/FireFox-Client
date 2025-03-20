@@ -2,6 +2,10 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 import javax.annotation.Nullable;
+
+import cn.firefox.Client;
+import cn.firefox.manager.element.Element;
+import cn.firefox.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ITabCompleter;
 import net.minecraft.util.TabCompleter;
@@ -171,6 +175,10 @@ public class GuiChat extends GuiScreen implements ITabCompleter
     {
         if (mouseButton == 0)
         {
+            for (Element element : Client.getInstance().getElementManager().getElementMap().values()) {
+                element.setHovering(element.checkHover(mouseX,mouseY));
+            }
+
             ITextComponent itextcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
             if (itextcomponent != null && this.handleComponentClick(itextcomponent))
@@ -181,6 +189,14 @@ public class GuiChat extends GuiScreen implements ITabCompleter
 
         this.inputField.mouseClicked(mouseX, mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    @Override
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
+        for (Element element : Client.getInstance().getElementManager().getElementMap().values()) {
+            element.setHovering(false);
+        }
+        super.mouseReleased(mouseX, mouseY, state);
     }
 
     /**
@@ -233,6 +249,12 @@ public class GuiChat extends GuiScreen implements ITabCompleter
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        for (Element element : Client.getInstance().getElementManager().getElementMap().values()) {
+            if (!Client.getInstance().getModuleManager().getModule(element.getModuleName()).isEnabled()) continue;
+            RenderUtil.drawOutline((int) element.getX() - 4, (int) element.getY() - 4, (int) element.getWidth() + 8, (int) element.getHeight() + 8, -1);
+            if (element.isHovering()) element.setXY(mouseX - (element.getWidth() / 2), mouseY - (element.getHeight() / 2));
+        }
+
         drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
         ITextComponent itextcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());

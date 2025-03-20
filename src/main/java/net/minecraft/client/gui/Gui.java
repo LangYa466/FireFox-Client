@@ -1,11 +1,16 @@
 package net.minecraft.client.gui;
 
+import cn.firefox.util.render.ColorUtil;
+import cn.firefox.util.render.GLHelper;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glVertex2d;
 
 public class Gui
 {
@@ -14,10 +19,23 @@ public class Gui
     public static final ResourceLocation ICONS = new ResourceLocation("textures/gui/icons.png");
     protected float zLevel;
 
+    public static void drawRect3(double x, double y, double width, double height, int color) {
+        GLHelper.setup2DRendering(() -> {
+            ColorUtil.glColor(color);
+            GLHelper.setupRendering(GL_QUADS, () -> {
+                glVertex2d(x, y);
+                glVertex2d(x, y + height);
+                glVertex2d(x + width, y + height);
+                glVertex2d(x + width, y);
+            });
+            GlStateManager.resetColor();
+        });
+    }
+
     /**
      * Draws a thin horizontal line between two points.
      */
-    protected void drawHorizontalLine(int startX, int endX, int y, int color)
+    public void drawHorizontalLine(int startX, int endX, int y, int color)
     {
         if (endX < startX)
         {
@@ -32,7 +50,7 @@ public class Gui
     /**
      * Draw a 1 pixel wide vertical line. Args : x, y1, y2, color
      */
-    protected void drawVerticalLine(int x, int startY, int endY, int color)
+    public void drawVerticalLine(int x, int startY, int endY, int color)
     {
         if (endY < startY)
         {

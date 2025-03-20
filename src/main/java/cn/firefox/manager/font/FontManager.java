@@ -46,4 +46,9 @@ public class FontManager {
     public static CFontRenderer segoeUI() { return getRenderer(getFont("Segoe UI")); }
     public static CFontRenderer trebuchetMS() { return getRenderer(getFont("Trebuchet MS")); }
     public static CFontRenderer verdana() { return getRenderer(getFont("Verdana")); }
+
+    public static CFontRenderer font(int size) {
+        yahei().setSize(size);
+        return yahei();
+    }
 }

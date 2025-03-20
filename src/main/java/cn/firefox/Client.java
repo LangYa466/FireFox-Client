@@ -2,6 +2,9 @@ package cn.firefox;
 
 import cn.firefox.manager.CommandManager;
 import cn.firefox.manager.ModuleManager;
+import cn.firefox.manager.config.ConfigManager;
+import cn.firefox.manager.element.ElementManager;
+import cn.firefox.manager.notification.NotificationManager;
 import cn.langya.Logger;
 import com.cubk.event.EventManager;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
@@ -25,6 +28,9 @@ public class Client {
     private EventManager eventManager;
     private ModuleManager moduleManager;
     private CommandManager commandManager;
+    private ElementManager elementManager;
+    private ConfigManager configManager;
+    private NotificationManager notificationManager;
 
     private boolean initiated;
 
@@ -39,9 +45,14 @@ public class Client {
         eventManager = new EventManager();
         moduleManager = new ModuleManager();
         commandManager = new CommandManager();
+        elementManager = new ElementManager();
+        configManager = new ConfigManager();
+        notificationManager = new NotificationManager();
 
         moduleManager.init();
         commandManager.init();
+        configManager.init();
+        notificationManager.init();
 
         initViaMCP();
 

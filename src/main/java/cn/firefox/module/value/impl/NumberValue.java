@@ -14,15 +14,16 @@ import java.util.function.Supplier;
 @Setter
 public class NumberValue extends Value<Double> {
     private double max, min, inc;
-    public NumberValue(Double value, double min, double max, double inc) {
-        super(value, null);
+
+    public NumberValue(String name, Double value, double min, double max, double inc) {
+        super(name, value, null);
         this.min = min;
         this.max = max;
         this.inc = inc;
     }
 
-    public NumberValue(Double value, double min, double max, double inc, Supplier<?> isDisplay) {
-        super(value, isDisplay);
+    public NumberValue(String name, Double value, double min, double max, double inc, Supplier<?> isDisplay) {
+        super(name, value, isDisplay);
         this.min = min;
         this.max = max;
         this.inc = inc;

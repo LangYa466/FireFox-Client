@@ -22,8 +22,8 @@ public class KillAura extends Module {
     }
 
     // 测试代码 自己完善
-    private final NumberValue cps = new NumberValue(10.0, 1.0, 20.0, 1.0);
-    private final NumberValue range = new NumberValue(4.0, 1.0, 6.0, 0.1);
+    private final NumberValue cps = new NumberValue("CPS",10.0, 1.0, 20.0, 1.0);
+    private final NumberValue range = new NumberValue("Range",4.0, 1.0, 6.0, 0.1);
 
     private EntityLivingBase target;
     private long lastAttackTime = 0;

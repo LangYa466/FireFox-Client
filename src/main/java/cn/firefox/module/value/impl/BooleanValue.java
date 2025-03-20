@@ -14,11 +14,12 @@ import java.util.function.Supplier;
 @Setter
 public class BooleanValue extends Value<Boolean> {
 
-    public BooleanValue(Boolean value) {
-        super(value, null);
+    public BooleanValue(String name, Boolean value) {
+        super(name, value, null);
     }
-    public BooleanValue(Boolean value, Supplier<?> supplier) {
-        super(value, supplier);
+
+    public BooleanValue(String name, Boolean value, Supplier<?> supplier) {
+        super(name, value, supplier);
     }
 
     public void toggle() {

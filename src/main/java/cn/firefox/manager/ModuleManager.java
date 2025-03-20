@@ -2,6 +2,7 @@ package cn.firefox.manager;
 
 import cn.firefox.Client;
 import cn.firefox.events.EventKeyInput;
+import cn.firefox.module.Category;
 import cn.firefox.module.Module;
 import cn.firefox.module.impl.combat.*;
 import cn.firefox.module.impl.move.*;
@@ -13,7 +14,9 @@ import lombok.Getter;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author LangYa466
@@ -44,6 +47,8 @@ public class ModuleManager {
         addModule(new HUD());
         addModule(new Sprint());
         addModule(new KillAura());
+        addModule(new NotificationModule());
+        addModule(new ClickGuiModule());
     }
 
     public void init() {
@@ -54,5 +59,25 @@ public class ModuleManager {
     @EventTarget
     public void onKeyInput(EventKeyInput event) {
         moduleMap.values().stream().filter(module -> module.getKeyCode() == event.getKey() && event.getKey() != -1).forEach(Module::toggle);
+    }
+
+    public List<Module> getModsByCategory(Category m) {
+        return moduleMap.values().stream()
+                .filter(module -> module.getCategory() == m)
+                .collect(Collectors.toList());
+    }
+
+    public Module getModule(Class<?> moduleClass) {
+        for (Module module : moduleMap.values()) {
+            if (moduleClass == module.getClass()) return module;
+        }
+        return null;
+    }
+
+    public Module getModule(String name) {
+        for (Module module : moduleMap.values()) {
+            if (module.getName().toLowerCase().contains(name.toLowerCase())) return module;
+        }
+        return null;
     }
 }

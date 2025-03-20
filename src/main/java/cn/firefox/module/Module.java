@@ -2,7 +2,9 @@ package cn.firefox.module;
 
 import cn.firefox.Client;
 import cn.firefox.Wrapper;
+import cn.firefox.manager.notification.NotificationType;
 import cn.firefox.module.value.Value;
+import cn.firefox.module.value.impl.BooleanValue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,9 +43,13 @@ public class Module implements Wrapper {
         if (enabled) {
             onEnable();
             Client.getInstance().getEventManager().register(this);
+            if (mc.player != null)
+                Client.getInstance().getNotificationManager().post(name + " Enabled", NotificationType.SUCCESS);
         } else {
             onDisable();
             Client.getInstance().getEventManager().unregister(this);
+            if (mc.player != null)
+                Client.getInstance().getNotificationManager().post(name + " Disabled", NotificationType.FAILED);
         }
     }
 
@@ -52,5 +58,9 @@ public class Module implements Wrapper {
 
     public void toggle() {
         setEnabled(!enabled);
+    }
+
+    public void addValue(Value<?> value) {
+        values.add(value);
     }
 }

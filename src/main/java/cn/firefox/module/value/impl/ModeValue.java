@@ -15,13 +15,13 @@ import java.util.function.Supplier;
 public class ModeValue extends Value<String> {
     private final String[] modes;
 
-    public ModeValue(String value, String... modes) {
-        super(value, null);
+    public ModeValue(String name, String value, String... modes) {
+        super(name, value, null);
         this.modes = modes;
     }
 
-    public ModeValue(String value, Supplier<?> supplier, String... modes) {
-        super(value, supplier);
+    public ModeValue(String name, String value, Supplier<?> supplier, String... modes) {
+        super(name, value, supplier);
         this.modes = modes;
     }
 

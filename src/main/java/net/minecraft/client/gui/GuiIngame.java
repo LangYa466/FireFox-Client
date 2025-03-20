@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import cn.firefox.Client;
 import cn.firefox.events.EventRender2D;
+import cn.firefox.module.impl.render.HUD;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -207,6 +208,15 @@ public class GuiIngame extends Gui
         {
             this.renderHotbar(scaledresolution, partialTicks);
         }
+
+        HUD hud = (HUD) Client.getInstance().getModuleManager().getModule(HUD.class);
+        if (hud.blur.getValue()) {
+            hud.drawBlur();
+        }
+        if (hud.bloom.getValue()) {
+            hud.drawBloom();
+        }
+
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         EventRender2D eventRender2D = new EventRender2D(partialTicks, scaledresolution);
         Client.getInstance().getEventManager().call(eventRender2D);
