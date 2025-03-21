@@ -279,7 +279,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
     /** Manages all search trees */
     private SearchTreeManager searchTreeManager = new SearchTreeManager();
-    private final Session session;
+    public Session session;
     private boolean isGamePaused;
 
     /**
@@ -1823,7 +1823,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     /**
      * Called to resize the current screen.
      */
-    private void resize(int width, int height)
+    public void resize(int width, int height)
     {
         this.displayWidth = Math.max(1, width);
         this.displayHeight = Math.max(1, height);

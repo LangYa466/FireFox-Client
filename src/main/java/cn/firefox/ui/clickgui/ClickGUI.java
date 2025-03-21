@@ -63,7 +63,7 @@ public class ClickGUI extends GuiScreen {
         }
 
         if (!shouldClose || startTimer.hasTimeElapsed(categoryPanels.size() * 50L)) {
-            RenderUtil.scaleStart(sr.getScaledWidth() / 2f, sr.getScaledHeight() / 2f, (float) easeBackIn.getOutput());
+            RenderUtil.scaleStart(sr.getScaledWidth() / 2f, sr.getScaledHeight() / 2f, easeBackIn.getOutput().floatValue());
         }
         for (CategoryPanel categoryPanel : categoryPanels) {
             categoryPanel.drawscreen(mouseX, mouseY, indexx, indexy, (int) (120 * easeBackIn.getOutput()), easeBackIn);

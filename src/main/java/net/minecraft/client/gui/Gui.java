@@ -2,12 +2,15 @@ package net.minecraft.client.gui;
 
 import cn.firefox.util.render.ColorUtil;
 import cn.firefox.util.render.GLHelper;
+import cn.firefox.util.render.GLUtil;
+import cn.firefox.util.render.RenderUtil;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glVertex2d;
@@ -31,6 +34,30 @@ public class Gui
             GlStateManager.resetColor();
         });
     }
+
+    public static void drawRect2(double x, double y, double width, double height, int color) {
+        RenderUtil.resetColor();
+        RenderUtil.setAlphaLimit(0);
+        GLUtil.setup2DRendering(true);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder worldrenderer = tessellator.getBuffer();
+
+        int alpha = (color >> 24) & 0xFF;
+        int red = (color >> 16) & 0xFF;
+        int green = (color >> 8) & 0xFF;
+        int blue = color & 0xFF;
+
+        worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos(x, y, 0.0D).color(red, green, blue, alpha).endVertex();
+        worldrenderer.pos(x, y + height, 0.0D).color(red, green, blue, alpha).endVertex();
+        worldrenderer.pos(x + width, y + height, 0.0D).color(red, green, blue, alpha).endVertex();
+        worldrenderer.pos(x + width, y, 0.0D).color(red, green, blue, alpha).endVertex();
+        tessellator.draw();
+
+        GLUtil.end2DRendering();
+    }
+
 
     /**
      * Draws a thin horizontal line between two points.
@@ -213,6 +240,19 @@ public class Gui
         bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
         bufferbuilder.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
         bufferbuilder.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        tessellator.draw();
+    }
+
+    public static void drawModalRectWithCustomSizedTexture(float x, float y, float u, float v, float width, float height, float textureWidth, float textureHeight) {
+        float f = 1.0F / textureWidth;
+        float f1 = 1.0F / textureHeight;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder worldrenderer = tessellator.getBuffer();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        worldrenderer.pos(x, y + height, 0.0D).tex(u * f, (v + height) * f1).endVertex();
+        worldrenderer.pos(x + width, y + height, 0.0D).tex((u + width) * f, (v + height) * f1).endVertex();
+        worldrenderer.pos(x + width, y, 0.0D).tex((u + width) * f, v * f1).endVertex();
+        worldrenderer.pos(x, y, 0.0D).tex(u * f, v * f1).endVertex();
         tessellator.draw();
     }
 

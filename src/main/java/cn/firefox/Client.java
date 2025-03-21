@@ -7,6 +7,7 @@ import cn.firefox.manager.api.WebUIManager;
 import cn.firefox.manager.config.ConfigManager;
 import cn.firefox.manager.element.ElementManager;
 import cn.firefox.manager.notification.NotificationManager;
+import cn.firefox.ui.altmanager.GuiAltManager;
 import cn.langya.Logger;
 import com.cubk.event.EventManager;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
@@ -35,8 +36,11 @@ public class Client {
     private NotificationManager notificationManager;
     private FriendManager friendManager;
     private WebUIManager webUIManager;
+    private GuiAltManager altManager;
 
     private boolean initiated;
+    public static boolean updateGuiScale;
+    public static int prevGuiScale;
 
     public void init() {
         if (initiated) {
@@ -54,6 +58,7 @@ public class Client {
         notificationManager = new NotificationManager();
         friendManager = new FriendManager();
         webUIManager = new WebUIManager();
+        altManager = new GuiAltManager();
 
         moduleManager.init();
         commandManager.init();

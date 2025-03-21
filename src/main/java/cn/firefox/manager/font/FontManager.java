@@ -1,6 +1,10 @@
 package cn.firefox.manager.font;
 
+import cn.langya.Logger;
+import net.minecraft.client.gui.recipebook.GhostRecipe;
+
 import java.awt.*;
+import java.io.InputStream;
 import java.util.HashMap;
 
 /**
@@ -26,6 +30,20 @@ public class FontManager {
         return new Font(name, Font.PLAIN, 18);
     }
 
+    private static Font getFontF(String name) {
+        try {
+            Font font;
+            InputStream inputStream = FontManager.class.getResourceAsStream("/assets/minecraft/firefox/font/" + name + ".ttf");
+            assert inputStream != null;
+            font = Font.createFont(Font.PLAIN, inputStream);
+            font = font.deriveFont(Font.PLAIN, 18);
+            return font;
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+            return new Font("default", Font.PLAIN, +10);
+        }
+    }
+
     // 我去Fonts文件夹复制的
     public static CFontRenderer yahei() { return getRenderer(getFont("Microsoft YaHei")); }
     public static CFontRenderer simsun() { return getRenderer(getFont("SimSun")); }
@@ -46,6 +64,7 @@ public class FontManager {
     public static CFontRenderer segoeUI() { return getRenderer(getFont("Segoe UI")); }
     public static CFontRenderer trebuchetMS() { return getRenderer(getFont("Trebuchet MS")); }
     public static CFontRenderer verdana() { return getRenderer(getFont("Verdana")); }
+    public static CFontRenderer iconFont() { return getRenderer(getFontF("icon")); }
 
     public static CFontRenderer font(int size) {
         yahei().setSize(size);

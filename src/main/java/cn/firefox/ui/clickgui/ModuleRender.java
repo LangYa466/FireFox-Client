@@ -135,7 +135,7 @@ public class ModuleRender {
                         booleanValue.decelerateAnimation.setDirection(Direction.BACKWARDS);
                     }
                     if (booleanValue.getValue())
-                        FontManager.font(14).drawString("v",(float) (.5f + x + FontManager.font(14).getStringWidth(booleanValue.getName()) + ((15f) * (1 + booleanValue.easeBackIn.getOutput()))), y + (float) height / 2 - (float) FontManager.font(14).getHeight() / 2 + 18.5f + moduley + FontManager.font(14).getHeight() + 8 + numberindex * 15 + addition - FontManager.font(14).getHeight() + 11, ColorUtil.applyOpacity(new Color(-1), (float) booleanValue.decelerateAnimation.getOutput()).getRGB());
+                        FontManager.font(14).drawString("v",(float) (.5f + x + FontManager.font(14).getStringWidth(booleanValue.getName()) + ((15f) * (1 + booleanValue.easeBackIn.getOutput()))), y + (float) height / 2 - (float) FontManager.font(14).getHeight() / 2 + 18.5f + moduley + FontManager.font(14).getHeight() + 8 + numberindex * 15 + addition - FontManager.font(14).getHeight() + 11, ColorUtil.applyOpacity(new Color(-1), booleanValue.decelerateAnimation.getOutput().floatValue()).getRGB());
 
                     numberindex++;
                 }

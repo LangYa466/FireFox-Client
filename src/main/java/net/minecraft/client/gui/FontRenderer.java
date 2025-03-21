@@ -3,6 +3,8 @@ package net.minecraft.client.gui;
 import com.ibm.icu.text.ArabicShaping;
 import com.ibm.icu.text.ArabicShapingException;
 import com.ibm.icu.text.Bidi;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Closeable;
 import java.io.IOException;
@@ -393,6 +395,11 @@ public class FontRenderer implements IResourceManagerReloadListener
     public int drawString(String text, int x, int y, int color)
     {
         return this.drawString(text, (float)x, (float)y, color, false);
+    }
+
+    public int drawString(String text, float x, float y, Color color)
+    {
+        return this.drawString(text, x, y, color.getRGB(), false);
     }
 
     /**

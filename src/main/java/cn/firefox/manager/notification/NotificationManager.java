@@ -24,4 +24,16 @@ public class NotificationManager {
                 Easing.EASE_IN_OUT_QUAD,
                 2500, notificationType));
     }
+
+    public void post(NotificationType notificationType, String title, int second) {
+        this.notifications.add(new Notification(title, Easing.EASE_IN_OUT_QUAD,
+                Easing.EASE_IN_OUT_QUAD,
+                second * 1000L, notificationType));
+    }
+
+    public void post(NotificationType notificationType, String title) {
+        this.notifications.add(new Notification(title, Easing.EASE_IN_OUT_QUAD,
+                Easing.EASE_IN_OUT_QUAD,
+                2500, notificationType));
+    }
 }

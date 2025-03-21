@@ -161,4 +161,37 @@ public class RenderUtil {
         gui.drawVerticalLine(x, y, y + height, color);
         gui.drawVerticalLine(x + width, y, y + height, color);
     }
+
+    public static void rotateStart(float x, float y, float width, float height, float rotation) {
+        glPushMatrix();
+        x += width / 2;
+        y += height / 3;
+        glTranslatef(x, y, 0);
+        glRotatef(rotation, 0, 0, 1);
+        glTranslatef(-x, -y, 0);
+    }
+
+    public static void rotateStartReal(float x, float y, float width, float height, float rotation) {
+        glPushMatrix();
+        glTranslatef(x, y, 0);
+        glRotatef(rotation, 0, 0, 1);
+        glTranslatef(-x, -y, 0);
+    }
+
+    public static void rotateEnd() {
+        glPopMatrix();
+    }
+
+    public static void drawMicrosoftLogo(float x, float y, float size, float spacing, float alpha) {
+        float rectSize = size / 2f - spacing;
+        int alphaVal = (int) (255 * alpha);
+        Gui.drawRect2(x, y, rectSize, rectSize, new Color(244, 83, 38, alphaVal).getRGB());
+        Gui.drawRect2(x + rectSize + spacing, y, rectSize, rectSize, new Color(130, 188, 6, alphaVal).getRGB());
+        Gui.drawRect2(x, y + spacing + rectSize, rectSize, rectSize, new Color(5, 166, 241, alphaVal).getRGB());
+        Gui.drawRect2(x + rectSize + spacing, y + spacing + rectSize, rectSize, rectSize, new Color(254, 186, 7, alphaVal).getRGB());
+    }
+
+    public static void drawMicrosoftLogo(float x, float y, float size, float spacing) {
+        drawMicrosoftLogo(x, y, size, spacing, 1f);
+    }
 }

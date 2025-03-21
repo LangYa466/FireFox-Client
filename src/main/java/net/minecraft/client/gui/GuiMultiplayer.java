@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import cn.firefox.Client;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import java.io.IOException;
@@ -103,6 +104,7 @@ public class GuiMultiplayer extends GuiScreen
         this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 76, this.height - 28, 75, 20, I18n.format("gui.cancel")));
         this.selectServer(this.serverListSelector.getSelected());
         this.buttonList.add(ViaMCP.INSTANCE.getAsyncVersionSlider());
+        this.buttonList.add(new GuiButton(8888,width - 120,5,110, 20, "GuiAltManager"));
     }
 
     /**
@@ -165,6 +167,10 @@ public class GuiMultiplayer extends GuiScreen
             else if (button.id == 1)
             {
                 this.connectToSelected();
+            }
+            else if (button.id == 8888)
+            {
+                this.mc.displayGuiScreen(Client.getInstance().getAltManager());
             }
             else if (button.id == 4)
             {
