@@ -47,8 +47,8 @@ public class CommandManager {
 
             if (optionalCommand.isPresent()) {
                 Command command = optionalCommand.get();
+                event.setCancelled(true);
                 if (!command.run(args)) ChatUtil.log(String.format("[CommandManager] %s", command.getUsage()));
-                else event.setCancelled(true);
             } else {
                 ChatUtil.log("[CommandManager] the command was not found");
             }

@@ -2,6 +2,7 @@ package net.minecraft.client;
 
 import cn.firefox.Client;
 import cn.firefox.events.EventKeyInput;
+import cn.firefox.ui.mainmenu.SplashScreen;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
@@ -557,14 +558,18 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         this.resourceManager.registerReloadListener(this.languageManager);
         this.refreshResources();
         this.renderEngine = new TextureManager(this.resourceManager);
+        SplashScreen.drawSplash(getTextureManager());
         this.resourceManager.registerReloadListener(this.renderEngine);
         this.drawSplashScreen(this.renderEngine);
         this.skinManager = new SkinManager(this.renderEngine, new File(this.fileAssets, "skins"), this.sessionService);
+        SplashScreen.setProgress(1, "Saves");
         this.saveLoader = new AnvilSaveConverter(new File(this.gameDir, "saves"), this.dataFixer);
         this.soundHandler = new SoundHandler(this.resourceManager, this.gameSettings);
+        SplashScreen.setProgress(2, "SoundHandler");
         this.resourceManager.registerReloadListener(this.soundHandler);
         this.musicTicker = new MusicTicker(this);
         this.fontRenderer = new FontRenderer(this.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.renderEngine, false);
+        SplashScreen.setProgress(4, "GalacticFontRenderer");
 
         if (this.gameSettings.language != null)
         {
@@ -577,7 +582,9 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         this.resourceManager.registerReloadListener(this.standardGalacticFontRenderer);
         this.resourceManager.registerReloadListener(new GrassColorReloadListener());
         this.resourceManager.registerReloadListener(new FoliageColorReloadListener());
+        SplashScreen.setProgress(5, "MouseHelper");
         this.mouseHelper = new MouseHelper();
+        SplashScreen.setProgress(6, "OpenGL setup");
         this.checkGLError("Pre startup");
         GlStateManager.enableTexture2D();
         GlStateManager.shadeModel(7425);
@@ -591,17 +598,21 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         GlStateManager.loadIdentity();
         GlStateManager.matrixMode(5888);
         this.checkGLError("Startup");
+        SplashScreen.setProgress(7, "Textures");
         this.textureMapBlocks = new TextureMap("textures");
+        SplashScreen.setProgress(8, "RenderEngine");
         this.textureMapBlocks.setMipmapLevels(this.gameSettings.mipmapLevels);
         this.renderEngine.loadTickableTexture(TextureMap.LOCATION_BLOCKS_TEXTURE, this.textureMapBlocks);
         this.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         this.textureMapBlocks.setBlurMipmapDirect(false, this.gameSettings.mipmapLevels > 0);
+        SplashScreen.setProgress(9, "ModelManager");
         this.modelManager = new ModelManager(this.textureMapBlocks);
         this.resourceManager.registerReloadListener(this.modelManager);
         this.blockColors = BlockColors.init();
         this.itemColors = ItemColors.init(this.blockColors);
         this.renderItem = new RenderItem(this.renderEngine, this.modelManager, this.itemColors);
         this.renderManager = new RenderManager(this.renderEngine, this.renderItem);
+        SplashScreen.setProgress(10, "ItemRenderer");
         this.itemRenderer = new ItemRenderer(this);
         this.resourceManager.registerReloadListener(this.renderItem);
         this.entityRenderer = new EntityRenderer(this, this.resourceManager);
@@ -615,8 +626,10 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         GlStateManager.viewport(0, 0, this.displayWidth, this.displayHeight);
         this.effectRenderer = new ParticleManager(this.world, this.renderEngine);
         this.checkGLError("Post startup");
+        SplashScreen.setProgress(11, "IngameGUI");
         this.ingameGUI = new GuiIngame(this);
 
+        SplashScreen.setProgress(12, "MainMenu");
         if (this.serverName != null)
         {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
@@ -625,6 +638,8 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         {
             this.displayGuiScreen(new GuiMainMenu());
         }
+
+        SplashScreen.setProgress(13, "Client");
 
         this.renderEngine.deleteTexture(this.mojangLogo);
         this.mojangLogo = null;
@@ -646,6 +661,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
             this.gameSettings.saveOptions();
         }
 
+        SplashScreen.setProgress(14, "Done.");
         this.renderGlobal.makeEntityOutlineShader();
 
         Client.getInstance().init();

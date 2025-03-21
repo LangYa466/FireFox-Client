@@ -40,10 +40,9 @@ public class CFontRenderer extends FontRenderer {
         }
     }
 
-    private static int size = 18;
+    private final int size = 18;
 
     public CFontRenderer setSize(int size) {
-        CFontRenderer.size = size;
         return FontManager.getRenderer(font.deriveFont(Font.BOLD), size);
     }
 
