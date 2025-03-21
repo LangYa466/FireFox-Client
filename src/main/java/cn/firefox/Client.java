@@ -14,6 +14,7 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
+import lombok.Setter;
 import org.lwjgl.opengl.Display;
 
 /**
@@ -21,6 +22,7 @@ import org.lwjgl.opengl.Display;
  * @since 2025/3/20
  */
 @Getter
+@Setter
 public class Client {
     @Getter
     private static final Client instance = new Client();
@@ -29,7 +31,7 @@ public class Client {
     private final String version = "0.1";
 
     private EventManager eventManager;
-    private ModuleManager moduleManager;
+    private ModuleManager moduleManager = new ModuleManager();
     private CommandManager commandManager;
     private ElementManager elementManager;
     private ConfigManager configManager;
@@ -51,7 +53,6 @@ public class Client {
         Display.setTitle(String.format("%s - %s",name,version));
 
         eventManager = new EventManager();
-        moduleManager = new ModuleManager();
         commandManager = new CommandManager();
         elementManager = new ElementManager();
         configManager = new ConfigManager();

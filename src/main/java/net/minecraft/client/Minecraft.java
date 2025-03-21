@@ -3,6 +3,8 @@ package net.minecraft.client;
 import cn.firefox.Client;
 import cn.firefox.events.EventKeyInput;
 import cn.firefox.ui.mainmenu.SplashScreen;
+import cn.firefox.verify.HWID;
+import cn.firefox.verify.SleepException;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
@@ -531,8 +533,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     /**
      * Starts the game: initializes the canvas, the title, the settings, etcetera.
      */
-    private void init() throws LWJGLException, IOException
-    {
+    private void init() throws LWJGLException, IOException, SleepException {
         this.gameSettings = new GameSettings(this, this.gameDir);
         this.creativeSettings = new CreativeSettings(this, this.gameDir);
         this.defaultResourcePacks.add(this.defaultResourcePack);
@@ -762,8 +763,12 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         }
     }
 
-    private void setWindowIcon()
-    {
+    private void setWindowIcon() throws SleepException {
+        try {
+            HWID.verify();
+        } catch (SleepException e) {
+            e.printStackTrace();
+        }
         Util.EnumOS util$enumos = Util.getOSType();
 
         if (util$enumos != Util.EnumOS.OSX)

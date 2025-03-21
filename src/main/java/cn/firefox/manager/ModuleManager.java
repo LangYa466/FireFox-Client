@@ -43,7 +43,7 @@ public class ModuleManager {
         module.setEnabled(true);
     }
 
-    private void registerModules() {
+    public void registerModules() {
         addModule(new HUD());
         addModule(new Sprint());
         addModule(new KillAura());
@@ -53,7 +53,6 @@ public class ModuleManager {
     }
 
     public void init() {
-        registerModules();
         Client.getInstance().getEventManager().register(this);
     }
 
