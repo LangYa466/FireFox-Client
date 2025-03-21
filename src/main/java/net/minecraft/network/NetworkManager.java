@@ -2,6 +2,9 @@ package net.minecraft.network;
 
 import cn.firefox.Client;
 import cn.firefox.events.EventPacket;
+import cn.firefox.util.viamcp.CommonTransformer;
+import cn.firefox.util.viamcp.MCPDecodeHandler;
+import cn.firefox.util.viamcp.MCPEncodeHandler;
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.viaversion.viaversion.api.connection.UserConnection;
@@ -393,7 +396,10 @@ public class NetworkManager extends SimpleChannelInboundHandler < Packet<? >>
                     final UserConnection user = new UserConnectionImpl(p_initChannel_1_, true);
                     new ProtocolPipelineImpl(user);
 
-                    p_initChannel_1_.pipeline().addLast(new MCPVLBPipeline(user));
+                    p_initChannel_1_.pipeline().addBefore("encoder", CommonTransformer.HANDLER_ENCODER_NAME, new MCPEncodeHandler(user))
+                            .addBefore("decoder", CommonTransformer.HANDLER_DECODER_NAME, new MCPDecodeHandler(user));
+
+                    // p_initChannel_1_.pipeline().addLast(new MCPVLBPipeline(user));
                 }
             }
         })).channel(oclass)).connect(address, serverPort).syncUninterruptibly();

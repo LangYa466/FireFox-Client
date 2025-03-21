@@ -23,14 +23,14 @@ import org.lwjgl.opengl.Display;
  */
 @Getter
 @Setter
-public class Client {
+public class Client implements Wrapper {
     @Getter
     private static final Client instance = new Client();
 
     private final String name = "FireFox";
     private final String version = "0.1";
 
-    private EventManager eventManager;
+    private EventManager eventManager = new EventManager();
     private ModuleManager moduleManager = new ModuleManager();
     private CommandManager commandManager;
     private ElementManager elementManager;
@@ -51,8 +51,8 @@ public class Client {
         }
 
         Display.setTitle(String.format("%s - %s",name,version));
+        mc.refreshResources();
 
-        eventManager = new EventManager();
         commandManager = new CommandManager();
         elementManager = new ElementManager();
         configManager = new ConfigManager();

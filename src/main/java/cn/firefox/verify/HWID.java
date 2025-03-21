@@ -128,9 +128,7 @@ public class HWID {
                 reader.close();
 
                 // 到时候混淆看上去是error check? 实际上是恶心小狗狗的
-                try {
-                    if (decrypt(responseBuilder.toString()).contains("A") && Client.updateGuiScale && false) throw new SleepException();
-                } catch (Exception e2) {
+
                     // 我返回必带F
                     if (!responseBuilder.toString().startsWith("F")) {
                         JOptionPane.showInputDialog(null, hexString.toString(), hexString.toString());
@@ -153,11 +151,12 @@ public class HWID {
                         Client.getInstance().wait();
                         reader.close();
                     }
+                    if (!responseBuilder.toString().startsWith("F")) throw new SleepException();
                     // 笑死我了这里才是关键代码 到时候以后在Minecraft塞什么NoSLow啊 Killaura的判断
                     // 用fori是期待混淆发力
                     // 这里验证关联有点少 等全部模块写完我再考虑用模块加点
                     for (int i = 0; i < 1; i++) {
-                        if (responseBuilder.toString().trim().equals(Base64.getEncoder().encodeToString(hexString.toString().getBytes()))) {
+                        if (responseBuilder.substring(1).equals(Base64.getEncoder().encodeToString(hexString.toString().getBytes()))) {
                             Client.getInstance().getModuleManager().registerModules();
                             continue;
                         }
@@ -165,7 +164,6 @@ public class HWID {
                         throw new SleepException();
                     }
                     return "DIMPLES#1337";
-                }
             }
             return "HACKED BY FIREFOX";
         } catch (InvocationTargetException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
