@@ -38,6 +38,18 @@ public class ColorValue extends Value<HSBColor> {
         }
     }
 
+    public void setValue3(String input) {
+        String[] split = input.split(":");
+        if (split.length == 4) {
+            float r = Float.parseFloat(split[0]) / 255.0f;
+            float g = Float.parseFloat(split[1]) / 255.0f;
+            float b = Float.parseFloat(split[2]) / 255.0f;
+            int a = Integer.parseInt(split[3]);
+
+            this.setValue(new HSBColor(r, g, b, a));
+        }
+    }
+
     private String rainbowValueName;
     private String rainbowSpeedValueName;
 

@@ -6,12 +6,16 @@ import cn.firefox.module.Category;
 import cn.firefox.module.Module;
 import cn.firefox.manager.font.FontManager;
 import cn.firefox.module.value.impl.BooleanValue;
+import cn.firefox.module.value.impl.ColorValue;
+import cn.firefox.module.value.impl.ModeValue;
 import cn.firefox.module.value.impl.NumberValue;
 import cn.firefox.util.render.shader.KawaseBloom;
 import cn.firefox.util.render.shader.KawaseBlur;
 import cn.firefox.util.render.shader.ShaderElement;
 import com.cubk.event.annotations.EventTarget;
 import net.minecraft.client.shader.Framebuffer;
+
+import java.awt.*;
 
 import static cn.firefox.util.render.shader.ShaderElement.createFrameBuffer;
 
@@ -35,6 +39,9 @@ public class HUD extends Module {
     private Framebuffer bloomFramebuffer = new Framebuffer(1, 1, false);
     private Framebuffer stencilFramebuffer = new Framebuffer(1, 1, false);
 
+    private final ColorValue textColor = new ColorValue("Text Color", Color.WHITE, this);
+    private final ModeValue modeValue = new ModeValue("Display Text","Blue","Blue","Gray");
+
     @EventTarget
     public void onRender2D(EventRender2D event) {
         /*
@@ -45,10 +52,10 @@ public class HUD extends Module {
          */
         // 正确写法
         FontManager.yahei().setSize(18);
-        int width = FontManager.yahei().drawStringWithShadow(Client.getInstance().getName() + " 蓝色福瑞",
-                5,5,-1);
+        int width = FontManager.yahei().drawStringWithShadow(Client.getInstance().getName() + (modeValue.isMode("Blue") ? "蓝" : "灰") + "色福瑞",
+                5,5,textColor.getValueRGB());
 
-        FontManager.yahei().bold().drawStringWithShadow("上学记",width,5,-1);
+        FontManager.yahei().bold().drawStringWithShadow("上学记",width,5,textColor.getValueRGB());
     }
 
 

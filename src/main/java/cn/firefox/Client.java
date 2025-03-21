@@ -3,6 +3,7 @@ package cn.firefox;
 import cn.firefox.manager.CommandManager;
 import cn.firefox.manager.FriendManager;
 import cn.firefox.manager.ModuleManager;
+import cn.firefox.manager.api.WebUIManager;
 import cn.firefox.manager.config.ConfigManager;
 import cn.firefox.manager.element.ElementManager;
 import cn.firefox.manager.notification.NotificationManager;
@@ -33,6 +34,7 @@ public class Client {
     private ConfigManager configManager;
     private NotificationManager notificationManager;
     private FriendManager friendManager;
+    private WebUIManager webUIManager;
 
     private boolean initiated;
 
@@ -51,11 +53,13 @@ public class Client {
         configManager = new ConfigManager();
         notificationManager = new NotificationManager();
         friendManager = new FriendManager();
+        webUIManager = new WebUIManager();
 
         moduleManager.init();
         commandManager.init();
         configManager.init();
         notificationManager.init();
+        webUIManager.init();
 
         initViaMCP();
 
