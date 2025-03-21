@@ -42,10 +42,16 @@ public class AltManagerUtils implements Wrapper {
                 e.printStackTrace();
             }
         }
+
+        alts = new ArrayList<>();  // 空指针你吗死了
+
         try {
             byte[] content = Files.readAllBytes(altsFile.toPath());
-            alts = new ArrayList<>(Arrays.asList(new Gson().fromJson(new String(content), Alt[].class)));
-            alts.forEach(this::getHead);
+            Alt[] altArray = new Gson().fromJson(new String(content), Alt[].class);
+            if (altArray != null) {
+                alts.addAll(Arrays.asList(altArray));
+                alts.forEach(this::getHead);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
