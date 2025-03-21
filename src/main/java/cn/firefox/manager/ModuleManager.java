@@ -5,6 +5,7 @@ import cn.firefox.events.EventKeyInput;
 import cn.firefox.module.Category;
 import cn.firefox.module.Module;
 import cn.firefox.module.impl.combat.*;
+import cn.firefox.module.impl.misc.HackerDetector;
 import cn.firefox.module.impl.move.*;
 import cn.firefox.module.impl.render.*;
 import cn.firefox.module.value.Value;
@@ -49,6 +50,8 @@ public class ModuleManager {
         addModule(new KillAura());
         addModule(new NotificationModule());
         addModule(new ClickGuiModule());
+        addModule(new Teams());
+        addModule(new HackerDetector());
     }
 
     public void init() {

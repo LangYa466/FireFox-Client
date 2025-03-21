@@ -114,6 +114,7 @@ public abstract class EntityLivingBase extends Entity
     /**
      * The amount of time remaining this entity should act 'hurt'. (Visual appearance of red tint)
      */
+    @Getter
     public int hurtTime;
 
     /** What the hurt time was max set to last. */
@@ -1861,6 +1862,10 @@ public abstract class EntityLivingBase extends Entity
         {
             throw new IllegalArgumentException("Invalid hand " + hand);
         }
+    }
+
+    public ItemStack getHeldItem() {
+        return this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
     }
 
     public void setHeldItem(EnumHand hand, ItemStack stack)

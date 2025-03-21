@@ -1,10 +1,14 @@
 package net.minecraft.network;
 
+import cn.firefox.Client;
+import cn.firefox.events.EventPacket;
 import net.minecraft.network.play.server.SPacketJoinGame;
 import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraft.network.play.server.SPacketRespawn;
 import net.optifine.Config;
 import net.minecraft.util.IThreadListener;
+
+import static cn.firefox.Wrapper.mc;
 
 public class PacketThreadUtil
 {
@@ -26,6 +30,13 @@ public class PacketThreadUtil
         }
         else
         {
+            EventPacket.Receive receive = new EventPacket.Receive(packetIn);
+            if (mc.player != null) {
+                Client.getInstance().getEventManager().call(receive);
+            }
+            if (receive.isCancelled()) {
+                throw ThreadQuickExitException.INSTANCE;
+            }
             clientPreProcessPacket(packetIn);
         }
     }

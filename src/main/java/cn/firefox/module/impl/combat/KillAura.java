@@ -5,6 +5,7 @@ import cn.firefox.events.EventUpdate;
 import cn.firefox.module.Category;
 import cn.firefox.module.Module;
 import cn.firefox.module.value.impl.NumberValue;
+import cn.firefox.util.misc.TimerUtil;
 import com.cubk.event.annotations.EventTarget;
 import de.florianmichael.viamcp.fixes.AttackOrder;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,7 +27,7 @@ public class KillAura extends Module {
     private final NumberValue range = new NumberValue("Range",4.0, 1.0, 6.0, 0.1);
 
     private EntityLivingBase target;
-    private long lastAttackTime = 0;
+    private final TimerUtil cpsTimer = new TimerUtil();
 
     @Override
     public void onEnable() {
@@ -73,9 +74,9 @@ public class KillAura extends Module {
         if (!event.isPost()) return;
 
         long attackCooldown = (long) (1000 / cps.getValue());
-        if (target != null && System.currentTimeMillis() - lastAttackTime > attackCooldown) {
+        if (target != null && cpsTimer.hasReached(attackCooldown)) {
             AttackOrder.sendFixedAttack(mc.player, target);
-            lastAttackTime = System.currentTimeMillis();
+            cpsTimer.reset();
         }
     }
 }

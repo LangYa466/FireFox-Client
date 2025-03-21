@@ -1,6 +1,7 @@
 package cn.firefox;
 
 import cn.firefox.manager.CommandManager;
+import cn.firefox.manager.FriendManager;
 import cn.firefox.manager.ModuleManager;
 import cn.firefox.manager.config.ConfigManager;
 import cn.firefox.manager.element.ElementManager;
@@ -31,6 +32,7 @@ public class Client {
     private ElementManager elementManager;
     private ConfigManager configManager;
     private NotificationManager notificationManager;
+    private FriendManager friendManager;
 
     private boolean initiated;
 
@@ -48,6 +50,7 @@ public class Client {
         elementManager = new ElementManager();
         configManager = new ConfigManager();
         notificationManager = new NotificationManager();
+        friendManager = new FriendManager();
 
         moduleManager.init();
         commandManager.init();

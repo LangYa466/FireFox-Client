@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigManager implements Wrapper {
-    public static final File dir = new File(mc.gameDir,"M0SSH3ck");
+    public static final File dir = new File(mc.gameDir,"FireFox");
     public static final List<Config> configs = new ArrayList<>();
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -27,6 +27,7 @@ public class ConfigManager implements Wrapper {
         }
         add(new ModuleConfig());
         add(new ElementConfig());
+        add(new FriendsConfig());
 
         loadAllConfig();
     }

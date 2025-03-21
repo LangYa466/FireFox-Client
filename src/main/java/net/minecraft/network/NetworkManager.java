@@ -1,5 +1,7 @@
 package net.minecraft.network;
 
+import cn.firefox.Client;
+import cn.firefox.events.EventPacket;
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.viaversion.viaversion.api.connection.UserConnection;
@@ -49,6 +51,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+
+import static cn.firefox.Wrapper.mc;
 
 public class NetworkManager extends SimpleChannelInboundHandler < Packet<? >>
 {
@@ -224,6 +228,13 @@ public class NetworkManager extends SimpleChannelInboundHandler < Packet<? >>
      */
     private void dispatchPacket(final Packet<?> inPacket, @Nullable final GenericFutureListener <? extends Future <? super Void >> [] futureListeners)
     {
+        EventPacket.Send send = new EventPacket.Send(inPacket);
+        if (mc.player != null) {
+            Client.getInstance().getEventManager().call(send);
+        }
+        if (send.isCancelled()) {
+            return;
+        }
         final EnumConnectionState enumconnectionstate = EnumConnectionState.getFromPacket(inPacket);
         final EnumConnectionState enumconnectionstate1 = (EnumConnectionState)this.channel.attr(PROTOCOL_ATTRIBUTE_KEY).get();
 

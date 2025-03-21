@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer;
 
+import cn.firefox.Client;
+import cn.firefox.events.EventWorldChange;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
@@ -2778,6 +2780,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         if (this.updatedWorld != world)
         {
+            EventWorldChange eventWorldChange = new EventWorldChange(world);
+            Client.getInstance().getEventManager().call(eventWorldChange);
             RandomEntities.worldChanged(this.updatedWorld, world);
             Config.updateThreadPriorities();
             this.lastServerTime = 0L;
